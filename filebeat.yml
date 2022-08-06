@@ -1,0 +1,8 @@
+filebeat.inputs:
+- type: log
+  paths:
+          - /home/atlas/nginx_docker/logs/*.log:ro
+  exclude_files: ['\.gz$']
+
+output.logstash:
+        hosts: ["http://192.168.1.2:5044"]
