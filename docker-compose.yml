@@ -2,9 +2,14 @@ version: '3.2'
 
 services:
   filebeat:
+    container_name: dc_filebeat
     image: docker.elastic.co/beats/filebeat:7.17.3
-    
+    user: root
+    command: -e --strict.perms=false
     volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
-  
-    network_mode: "host"  
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+        # - filebeat-data:/var/lib/filebeat/dat- filebeat-data:/var/lib/filebeat/data
+      - /home/atlas/nginx_docker/logs:/usr/share/filebeat/log:ro 
+    ports:
+      - '5066:5066'
+ 

@@ -1,8 +1,17 @@
 filebeat.inputs:
 - type: log
   paths:
-          - /home/atlas/nginx_docker/logs/*.log:ro
+          - /usr/share/filebeat/logs/*.log:ro
   exclude_files: ['\.gz$']
 
-output.logstash:
-        hosts: ["http://192.168.1.2:5044"]
+  index: "weblogs-%{+YYYY.MM.dd}"
+  enabled: true
+
+output.elasticsearch:
+  hosts: ["http://192.168.1.2:9200"]
+  username: "elastic"
+  password: "elastic"
+  
+
+setup.dashboards.enabled: true
+setup.kibana.host: "http://192.168.1.2:5601"
